@@ -1,9 +1,9 @@
 from datetime import *
 import config 
-
+import md5
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
-from sqlalchemy import Table, Column, Integer, String, Date, Float
+from sqlalchemy import Table, Column, Integer, String, Date, Float, Boolean, DateTime
 # DB class
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] =  config.DB_URI
@@ -14,27 +14,27 @@ Captures - the ledger for players who have Captured flags to earn points
 """
 class Capture(db.Model):
 	__tablename__ 	= 'captures'
-	id 				= Column('id',				Integer, primary_key=True)
-	player_id 		= Column('player_id',		Integer, db.ForeignKey('players.id'))
-	level 			= Column('level',			Integer, db.ForeignKey('levels.id'))
-	points_earned 	= Column('points_earned',	Integer)
-	created_at 		= Column(db.DateTime, default=db.func.now())
-	updated_at 		= Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
+	id 				= Column(Integer, primary_key=True)
+	player_id 		= Column(Integer, db.ForeignKey('players.id'))
+	level 			= Column(Integer, db.ForeignKey('levels.id'))
+	points_earned 	= Column(Integer)
+	created_at 		= Column(DateTime, default=db.func.now())
+	updated_at 		= Column(DateTime, default=db.func.now(), onupdate=db.func.now())
 
 """
 Player engaged in the contest
 """
 class Player(db.Model):
-    __tablename__ = 'players'
-    id 		   = Column('id', 			Integer, primary_key=True)
-    username   = Column('username', 	db.String(60), unique=True)
-    email 	   = Column('email', 		db.String(120), unique=True)
-    token 	   = Column('token', 		db.String(160), unique=True)
-    board 	   = db.relationship('Board', primaryjoin='(Player.id==Board.player_id)', backref='players')
-    active     = Column('active', 		db.Boolean())
-    admin 	   = Column('admin',		db.Boolean())
-    created_at = db.Column('created_at', db.DateTime, default=db.func.now())
-    updated_at = db.Column('updated_at', db.DateTime, default=db.func.now(), onupdate=db.func.now())
+    __tablename__ 	= 'players'
+    id 		   		= Column(Integer, primary_key=True)
+    username   		= Column(String(60), unique=True)
+    email 	   		= Column(String(120), unique=True)
+    token 	   		= Column(String(160), unique=True)
+    board 	   		= db.relationship('Board', primaryjoin='(Player.id==Board.player_id)', backref='players')
+    active     		= Column(Boolean())
+    admin 	   		= Column(Boolean())
+    created_at 		= Column(DateTime, default=db.func.now())
+    updated_at 		= Column(DateTime, default=db.func.now(), onupdate=db.func.now())
 
     def __init__(self, username, email, token, active, admin):
     	self.username = username
@@ -56,10 +56,10 @@ Current board and stack-rank (may be unneeded)
 """
 class Board(db.Model):
     __tablename__ 	= 'board'
-    id 				= Column('id', Integer, primary_key=True)
-    player_id 		= Column('player_id', db.Integer, db.ForeignKey('players.id'))
-    created_at 		= Column(db.DateTime, default=db.func.now())
-    updated_at 		= Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
+    id 				= Column(Integer, primary_key=True)
+    player_id 		= Column(Integer, db.ForeignKey('players.id'))
+    created_at 		= Column(DateTime, default=db.func.now())
+    updated_at 		= Column(DateTime, default=db.func.now(), onupdate=db.func.now())
 
     def __init__(self, player_id):
     	self.player_id = player_id
@@ -70,13 +70,13 @@ class Board(db.Model):
 CTF Levels and their associated points (value)
 """
 class Level(db.Model):
-    __tablename__ = 'levels'
-    id = Column(Integer, primary_key=True)
-    title = Column(db.String(60))
-    description = Column(db.String(512))
-    value = Column(db.Integer, default=0)
-    created_at = db.Column(db.DateTime, default=db.func.now())
-    updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
+    __tablename__ 	= 'levels'
+    id 				= Column(Integer, primary_key=True)
+    title 			= Column(String(60))
+    description 	= Column(String(512))
+    value 			= Column(Integer, default=0)
+    created_at 		= Column(DateTime, default=db.func.now())
+    updated_at 		= Column(DateTime, default=db.func.now(), onupdate=db.func.now())
 
 """
 Allows simplejson to sort our Models
