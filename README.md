@@ -3,6 +3,9 @@ leaderboard
 #About
 Small CTF leaderboard written in Python
 
+#Note
+There is a lot of work to still be done.  Right now I've created underpinnings so en0 can instrument iibot with api calls.
+
 #Requirements
 pip install Flask sqlalchemy Flask-SQLAlchemy jsonify simplejson
 
@@ -21,16 +24,15 @@ pip install Flask sqlalchemy Flask-SQLAlchemy jsonify simplejson
 
 #Design
 Two routes
-## /
-User-facing service.
+##/
+Web Application or the user-facing leaderboard with a beautiful layout.
 
 ##/api
 Services API allows gets/puts of leaderboard modifications
-Requires basic http authentication over ssl. Allowed API keys stored in DB.
+Requires basic http authentication over ssl. Allowed API keys for specific users stored in DB.
 ###/api/player/<integer id>
 ###/api/player/<string username>
 ###/api/board
-##/
-Web Application
+
 
 
