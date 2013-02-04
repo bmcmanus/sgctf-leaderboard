@@ -12,6 +12,14 @@ app.debug = True
 def get_board_list():
     return "%s" % json.dumps(Board.query.all(), default=ctf_model)
 
+@app.route("/api/player/<int:in_id>")
+def get_player_by_id(in_id):
+	return "%s" % json.dumps(Player.query.filter_by(id=in_id).all(), default=ctf_model)
+
+@app.route("/api/player/<string:in_username>")
+def get_player_by_username(in_username):
+	return "%s" % json.dumps(Player.query.filter_by(username=in_username).all(), default=ctf_model)
+
 @app.route("/")
 def hello():
     return "View not available for application, just yet."
