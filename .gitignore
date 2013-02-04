@@ -1,4 +1,6 @@
+.buildpath
 *.py[cod]
+*.pyc
 
 # C extensions
 *.so
