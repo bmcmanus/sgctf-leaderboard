@@ -16,7 +16,7 @@ class Capture(db.Model):
 	__tablename__ 	= 'captures'
 	id 				= Column(Integer, primary_key=True)
 	player_id 		= Column(Integer, db.ForeignKey('players.id'))
-	level 			= Column(Integer, db.ForeignKey('levels.id'))
+	flag 			= Column(Integer, db.ForeignKey('flags.id'))
 	points_earned 	= Column(Integer)
 	created_at 		= Column(DateTime, default=db.func.now())
 	updated_at 		= Column(DateTime, default=db.func.now(), onupdate=db.func.now())
@@ -41,8 +41,6 @@ class Player(db.Model):
         self.email = email
         self.admin = admin
         self.active = active
-#        self.create_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-#        self.updated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
     def __unicode__(self):
         return self.username
@@ -63,20 +61,22 @@ class Board(db.Model):
 
     def __init__(self, player_id):
     	self.player_id = player_id
-#        self.create_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-#        self.updated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 """
-CTF Levels and their associated points (value)
+CTF Flags and their associated points (value)
 """
-class Level(db.Model):
-    __tablename__ 	= 'levels'
+class Flag(db.Model):
+    __tablename__ 	= 'flags'
     id 				= Column(Integer, primary_key=True)
     title 			= Column(String(60))
     description 	= Column(String(512))
     value 			= Column(Integer, default=0)
     created_at 		= Column(DateTime, default=db.func.now())
     updated_at 		= Column(DateTime, default=db.func.now(), onupdate=db.func.now())
+    def __init__(self, title, description, value):
+    	self.title = title
+    	self.description = description
+    	self.value = value
 
 """
 Allows simplejson to sort our Models
