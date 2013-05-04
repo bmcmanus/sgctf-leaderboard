@@ -22,6 +22,21 @@ class Capture(db.Model):
     created_at 		 = Column(DateTime, default=db.func.now())
     updated_at 		 = Column(DateTime, default=db.func.now(), onupdate=db.func.now())
 
+    def __init__(self, provided_token, flag):
+        self.flag = flag
+        player = db.session.query(Player).filter_by(token=provided_token).first() 
+        self.player_id = player.id
+
+        level = db.session.query(Flag).filter_by(id=flag).first()
+        self.points_earned = level.value
+        
+        if player.points is None:
+            player.points = 0
+        player.points += level.value
+        player.flag = flag
+        
+        
+        
 """
 Player engaged in the contest
 """
@@ -35,6 +50,8 @@ class Player(db.Model):
     board 	   		 = db.relationship('Board', primaryjoin='(Player.id==Board.player_id)', backref='players')
     active     		 = Column(Boolean())
     admin 	   		 = Column(Boolean())
+    points           = Column(Integer)
+    flag             = Column(Integer)
     created_at 		 = Column(DateTime, default=db.func.now())
     updated_at 		 = Column(DateTime, default=db.func.now(), onupdate=db.func.now())
 
@@ -48,6 +65,20 @@ class Player(db.Model):
         
     def __unicode__(self):
         return self.username
+    
+    def __getitem__(self, key):
+        try:
+            key = int(key)
+        except ValueError:
+            raise KeyError(key)
+        obj = db.session.query(self.orm_class).get(key)
+        # If the ORM class has a class method '.get' that performs the
+        # query, you could do this:  ``obj = self.orm_class.get(key)``
+        if obj is None:
+            raise KeyError(key)
+        obj.__name__ = key
+        obj.__parent__ = self
+        return obj
 
     def gravatar_url(self, size=80):
         return 'http://www.gravatar.com/avatar/%s?d=identicon&s=%d' % \
@@ -77,6 +108,7 @@ class Flag(db.Model):
     value 			 = Column(Integer, default=0)
     created_at 		 = Column(DateTime, default=db.func.now())
     updated_at 		 = Column(DateTime, default=db.func.now(), onupdate=db.func.now())
+    
     def __init__(self, title, description, value):
         self.title = title
         self.description = description
