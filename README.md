@@ -7,7 +7,7 @@ Small CTF leaderboard written in Python
 There is a lot of work to still be done.  Right now I've created underpinnings so en0 can instrument iibot with api calls.
 
 #Requirements
-pip install Flask sqlalchemy Flask-SQLAlchemy jsonify simplejson
+pip install Flask sqlalchemy Flask-SQLAlchemy jsonify simplejson jinja2
 
 #Getting Started
  * Install requirements
