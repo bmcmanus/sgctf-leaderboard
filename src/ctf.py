@@ -102,7 +102,7 @@ def display_board():
     display = []
     #this should be refactored with a list comprehension, seriously!
     i=0
-    for row in board:        
+    for row in board:
         i=i+1
         display.append({"rank": i, "name": row.name, "points": row.points, "flag": row.flag, "updated_at": row.updated_at-mst})
 #        return json.dumps(display)
@@ -121,5 +121,5 @@ if __name__ == "__main__":
     app.run(use_debugger=use_debugger, debug=app.debug,
             use_reloader=use_debugger, host='0.0.0.0')
     app.run()
-    #python 
+    #python
     #from model import db

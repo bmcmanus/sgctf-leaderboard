@@ -38,22 +38,22 @@ def create_natas_levels(db):
     #Level11 "Cookies are protected with XOR encryption" # xor cookie/original text to get key.  key is repeating pattern
     db.session.add(Flag('level 11', 'It\'s like algrebra.  Notice anything about the key you recovered', 500))
 
-    #Level12 "Choose a JPEG to upload (max 1KB):" # filename is passed from client 
+    #Level12 "Choose a JPEG to upload (max 1KB):" # filename is passed from client
     db.session.add(Flag('level 12', 'Do you trust your users?', 425))
 
     #Level13 "For security reasons, we now only accept image files!" # magic header (16 bytes from JPEG into PHP)
     db.session.add(Flag('level 13', 'It\'s magic!', 500))
 
-    #Level14 "Username: Password:" # sql injection 
+    #Level14 "Username: Password:" # sql injection
     db.session.add(Flag('level 14', 'Popular with the skiddies', 200))
 
     #Level15 "Username: Check existence" # SQL returns true/false, blind sql data extraction a letter at a time
     db.session.add(Flag('level 15', 'I\'m blind where is the data?', 550))
 
-    #Level16 "For security reasons, we now filter even more on certain characters  Find words containing:" 
-    #parameters to grep are quoted, command substitution to test characters a letter at a time from 
+    #Level16 "For security reasons, we now filter even more on certain characters  Find words containing:"
+    #parameters to grep are quoted, command substitution to test characters a letter at a time from
     #/etc/natas_webpass/natas17 if true then display something from dictionary, if not nothing.  Brute forces
-    #one character at a time.  
+    #one character at a time.
     db.session.add(Flag('level 16', 'Substitute what with what?', 550))
 
 def main():

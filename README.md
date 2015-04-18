@@ -13,8 +13,8 @@ pip install Flask sqlalchemy Flask-SQLAlchemy jsonify simplejson jinja2
  * virtualenv venv
  * source venv/bin/activate
  * pip install -r requirements.txt
- * python create_schema.py
- * python ctf.py
+ * python src/create_schema.py
+ * python src/ctf.py
  * Browse http://localhost:5000/api/board
  * Profit, add some entries to the board and enjoy.
 

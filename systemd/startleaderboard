@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-cd /home/leaderboard/leaderboard/leaderboard
-source ../bin/activate
-/home/leaderboard/leaderboard/bin/python ctf.py
-
