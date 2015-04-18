@@ -9,7 +9,11 @@ There is a lot of work to still be done.  Right now I've created underpinnings s
 #Requirements
 pip install Flask sqlalchemy Flask-SQLAlchemy jsonify simplejson jinja2
 
-#Getting Started
+#Docker (preferred method)
+ * docker build -t sgctf .
+ * docker run -d -p 5000:5000 sgctf
+
+#Getting Started (venv, local development)
  * virtualenv venv
  * source venv/bin/activate
  * pip install -r requirements.txt
