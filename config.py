@@ -1,1 +1,2 @@
-DB_URI = "sqlite:////home/jets/leaderboard/04may13.db"
+import os
+DB_URI = os.getenv('DB_URI', 'sqlite:////tmp/04may13.db')
